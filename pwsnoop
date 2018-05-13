@@ -1,0 +1,56 @@
+# -*- tab-width: 4 -*- ;; Emacs
+# vi: set filetype=sh tabstop=8 shiftwidth=8 noexpandtab :: Vi/ViM
+############################################################ IDENT(1)
+#
+# $Title: dwatch(8) module for sniffing passwords from read(2)/write(2) $
+# $Copyright: 2014-2018 Devin Teske. All rights reserved. $
+# $FrauBSD: pwsnoop 2018-05-13 16:00:55 +0000 freebsdfrau $
+#
+############################################################ DESCRIPTION
+#
+# Snoop on password prompts
+#
+############################################################ PROBE
+
+load_profile rw
+
+############################################################ GLOBALS
+
+: ${_DEBUG=}
+
+############################################################ MAIN
+
+[ "$DEBUG$EXIT_AFTER_COMPILE" ] || info "Watching '$PROBE' ..."
+eval dwatch $ARGV -q${CONSOLE:+y}X rw | awk -v debug=$_DEBUG '
+	function dump(pid) {
+		if (buf[pid]) {
+			printf "%s%s\n", info[pid], buf[pid]
+			fflush()
+		}
+		info[pid] = buf[pid] = snoop[pid] = ""
+	}
+	NR < 7 { next }
+	debug { printf "DEBUG: %s\n", $0 > "/dev/stderr" }
+	! match($6, /\[[0-9]+\]:$/) { next }
+	pid = substr($6, RSTART + 1, RLENGTH - 3) { }
+	$7 == "->" && tolower($0) ~ /password/ {
+		dump(pid)
+		snoop[pid]++
+		next
+	}
+	snoop[pid] {
+		if ($7 == "->") dump(pid)
+		else if ($7 == "<-" && sub(/" 1 byte$/, "")) {
+			if (match($0, /^.*: /))
+				info[pid] = substr($0, 1, RLENGTH)
+			sub(/^[^"]*"/, "")
+			buf[pid] = buf[pid] substr($0, 1, 1)
+		}
+	}
+' # END-QUOTE
+
+exit $SUCCESS
+
+################################################################################
+# END
+################################################################################
