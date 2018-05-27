@@ -4,7 +4,7 @@
 #
 # $Title: dwatch(8) module for sniffing passwords from read(2)/write(2) $
 # $Copyright: 2014-2018 Devin Teske. All rights reserved. $
-# $FrauBSD: pwsnoop 2018-05-13 16:00:55 +0000 freebsdfrau $
+# $FrauBSD: dwatch-pwsnoop/pwsnoop 2018-05-13 16:00:55 +0000 freebsdfrau $
 #
 ############################################################ DESCRIPTION
 #

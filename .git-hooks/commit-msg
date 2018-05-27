@@ -34,6 +34,6 @@ git diff --cached --name-only -z --diff-filter=ACM |
 ################################################################################
 #
 # $Copyright: 2015-2017 The FrauBSD Project. All rights reserved. $
-# $FrauBSD: .git-hooks/commit-msg 2018-05-13 15:58:04 +0000 freebsdfrau $
+# $FrauBSD: dwatch-pwsnoop/.git-hooks/commit-msg 2018-05-13 15:58:04 +0000 freebsdfrau $
 #
 ################################################################################
