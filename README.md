@@ -1,6 +1,6 @@
-[//]: # ($FrauBSD: dwatch-pwsnoop/README.md 2018-06-17 23:04:55 +0000 freebsdfrau $)
+[//]: # ($FrauBSD: dwatch-pwsnoop/README.md 2018-07-04 06:48:20 +0000 freebsdfrau $)
 
-# dwatch-pwsnoop
+# Welcome to [FrauBSD.org/dwatch-pwsnoop](https://fraubsd.org/dwatch-pwsnoop)!
 
 DTrace module for FreeBSD's dwatch(1) to snoop passwords
 
